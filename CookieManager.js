@@ -1,7 +1,7 @@
 export class CookieManager {
   constructor() {
       const now = new Date();
-      this.expiryTimeInSeconds = new Date(now.getTime() + 60000);
+      this.expiryTimeInSeconds = new Date(now.getTime() + (3600 * 1000));
       this.path = "/";
       this.domain = "";
       this.secure = "";
@@ -94,6 +94,7 @@ export class CookieManager {
   logCookies() {
       const cookies = document.cookie.split(";");
 
+      console.log("\nCookies:");
       for (let i = 0; i < cookies.length; i++) {
           console.log(cookies[i]);
       }

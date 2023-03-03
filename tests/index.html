@@ -22,13 +22,15 @@
 
         import { CookieManager } from "./CookieManager.js";
         let cm = new CookieManager();
-        cm.setExpiryTime(600);
+        // cm.setExpiryTime(600);
         cm.setSecurity(true, true, true);
 
         cm.set("test", "1234");
 
         setTimeout(() => {
             log(cm.get("test"));
+            log("-----------")
+            cm.logCookies();
         }, 1500)
 
 

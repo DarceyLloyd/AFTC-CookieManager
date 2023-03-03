@@ -30,6 +30,8 @@ cm.setSecurity(
     SameSiteStric:Boolean,
 )
 
+cm.setExpiryTime(600);
+
 // Set
 cm.setCookie("my-cookie", "cookie-value");
 // cm.set("my-cookie", "cookie-value"); // alias
@@ -40,8 +42,13 @@ const myCookie:String = cm.getCookie("my-cookie");
 
 // Delete
 cm.deleteCookie("my-cookie");
+// cm.delete("my-cookie); // alias
+// cm.del("my-cookie); // alias
 // cm.remove("my-cookie); // alias
 // cm.rem("my-cookie); // alias
+
+// Log available cookies
+cm.logCookies();
 ```
 
 ### Usage example 2 (TS)

@@ -60,8 +60,6 @@ export class CookieManager {
             return undefined;
         }
 
-        this.logCookies();
-
         const cookieValue = document.cookie.match(`(^|;)\\s*${name}\\s*=\\s*([^;]+)`);
         return cookieValue ? cookieValue.pop() : undefined;
     }

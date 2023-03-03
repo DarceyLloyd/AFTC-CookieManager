@@ -15,7 +15,7 @@ export class CookieManager {
 
     constructor() {
         const now = new Date();
-        this.expiryTimeInSeconds = new Date(now.getTime() + (60 * 1000));
+        this.expiryTimeInSeconds = new Date(now.getTime() + (3600 * 1000));
         this.log(this.expiryTimeInSeconds);
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
@@ -108,10 +108,10 @@ export class CookieManager {
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-    del(name:string){ this.deleteCookie(name); }
-    rem(name:string){ this.deleteCookie(name); }
-    remove(name:string){ this.deleteCookie(name); }
-    delete(name:string){ this.deleteCookie(name); }
+    del(name: string) { this.deleteCookie(name); }
+    rem(name: string) { this.deleteCookie(name); }
+    remove(name: string) { this.deleteCookie(name); }
+    delete(name: string) { this.deleteCookie(name); }
     deleteCookie(name: string) {
         if (name === "" || name.length === 0) {
             console.error("CookieManager.deleteCookie(name): Usage error - come on, I need the name of the cookie to delete!");
@@ -120,5 +120,16 @@ export class CookieManager {
         document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+    logCookies(): void {
+        const cookies: string[] = document.cookie.split(";");
+
+        console.log("\nCookies:");
+        for (let i = 0; i < cookies.length; i++) {
+            console.log(cookies[i]);
+        }
+    }
+
 
 }
