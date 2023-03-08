@@ -8,32 +8,60 @@ export class CookieManager {
 
     // Var defs
     public expiryTimeInSeconds: Date;
-    public path: string = "/";
-    public domain: string = ""
-    public secure: string = "";
+    private path: string = "/";
+    private domain: string = ""
+
+    private httpOnly: boolean = false;
+    private secureCookies: boolean = false;
+    private sameSite: boolean = false;
+    private securityStr: string = "";
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
     constructor() {
         const now = new Date();
         this.expiryTimeInSeconds = new Date(now.getTime() + (3600 * 1000));
-        this.log(this.expiryTimeInSeconds);
+        this.buildSecurityString();
+        // this.log(this.expiryTimeInSeconds);
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
-    log(args: any) {
-        console.warn(args);
+    setDomain(domain: string) {
+        this.domain = domain;
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
-    setSecurity(httpOnly: boolean, Secure: boolean, SameSiteStric: boolean) {
-        if (httpOnly) {
-            this.secure = "HttpOnly;"
+    setPath(path: string) {
+        this.path = path;
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+
+    setHttpOnly(enableHttpOnly: boolean) {
+        this.httpOnly = enableHttpOnly;
+        this.buildSecurityString();
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+
+    setSecure(useSecureCookies: boolean) {
+        this.secureCookies = useSecureCookies;
+        this.buildSecurityString();
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+
+    setSameSiteStrict(useSameSiteStrict: boolean) {
+        this.sameSite = useSameSiteStrict;
+        this.buildSecurityString();
+    }
+    // - - - - - - - - - - - - - - - - - - - - - - - -
+
+    private buildSecurityString() {
+        if (this.httpOnly) {
+            this.securityStr = "HttpOnly;"
         }
-        if (Secure) {
-            this.secure += "Secure;"
+        if (this.secureCookies) {
+            this.securityStr += "Secure;"
         }
-        if (SameSiteStric) {
-            this.secure += "SameSite=Strict;"
+        if (this.sameSite) {
+            this.securityStr += "SameSite=Strict;"
         }
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
@@ -41,26 +69,18 @@ export class CookieManager {
     setExpiryTime(expiryTimeInSeconds: number) {
         const now = new Date();
         this.expiryTimeInSeconds = new Date(now.getTime() + (expiryTimeInSeconds * 1000));
-        this.log(this.expiryTimeInSeconds);
+        console.warn(this.expiryTimeInSeconds);
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
-    set(
-        name: string,
-        value: string,
-        expiryTimeInSeconds: number | null = null,
-        path: string | null = null,
-        domain: string = "") {
-        this.setCookie(name, value, expiryTimeInSeconds, path, domain);
-    }
-    // - - - - - - - - - - - - - - - - - - - - - - - -
+
 
     setCookie(
         name: string,
         value: string,
-        expiryTimeInSeconds: number | null = null,
+        expiryTimeInSeconds: number,
         path: string | null = null,
-        domain: string = ""
+        domain: string | null = null
     ) {
 
         if (name === "" || name.length === 0) {
@@ -85,15 +105,20 @@ export class CookieManager {
             localDomain = domain;
         }
 
-        const cookie = `${name}=${value};expires=${localExpiryTime.toUTCString()};path=${localPath};domain=${localDomain};${this.secure}`;
+        const cookie = `${name}=${value};expires=${localExpiryTime.toUTCString()};path=${localPath};domain=${localDomain};${this.securityStr}`;
+        // console.warn(cookie);
         document.cookie = cookie;
 
     }
-    // - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-    get(name: string): string | undefined {
-        return this.getCookie(name);
+    // Alias
+    set(
+        name: string,
+        value: string,
+        expiryTimeInSeconds: number,
+        path: string | null = null,
+        domain: string | null = null
+    ) {
+        this.setCookie(name, value, expiryTimeInSeconds, path, domain);
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -105,20 +130,26 @@ export class CookieManager {
         const cookieValue = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
         return cookieValue ? cookieValue.pop() : undefined;
     }
+    // Alias's
+    get(name: string): string | undefined {
+        return this.getCookie(name);
+    }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
-
-    del(name: string) { this.deleteCookie(name); }
-    rem(name: string) { this.deleteCookie(name); }
-    remove(name: string) { this.deleteCookie(name); }
-    delete(name: string) { this.deleteCookie(name); }
     deleteCookie(name: string) {
         if (name === "" || name.length === 0) {
             console.error("CookieManager.deleteCookie(name): Usage error - come on, I need the name of the cookie to delete!");
             return undefined;
         }
-        document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+        const cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=${this.path};domain=${this.domain};${this.securityStr}`;
+        // document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
+        document.cookie = cookie;
     }
+    // Alias's
+    del(name: string) { this.deleteCookie(name); }
+    rem(name: string) { this.deleteCookie(name); }
+    remove(name: string) { this.deleteCookie(name); }
+    delete(name: string) { this.deleteCookie(name); }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -129,7 +160,8 @@ export class CookieManager {
         for (let i = 0; i < cookies.length; i++) {
             console.log(cookies[i]);
         }
+        console.log("");
     }
-
+    // - - - - - - - - - - - - - - - - - - - - - - - -
 
 }

@@ -1,0 +1,1 @@
+/// <reference path="../src/CookieManager.d.ts"/>

@@ -21,18 +21,17 @@ CookieManager.setCookie(
 ### Usage example 1 (TS)
 ```
 const cm:CookieManager = new CookieManager()
-cm.domain = "/"; // this is set to / by default
-
-cm.setSecurity(
-    httpOnly:Boolean,
-    Secure:Boolean,
-    SameSiteStric:Boolean,
-)
-
-cm.setExpiryTime(600);
+cm = new CookieManager();
+// cm.setPath("/");
+// cm.setDomain("yourdomain.com");
+cm.setExpiryTime(600); // optional can be set on setCookie
+cm.setSameSiteStrict(true);
+cm.setHttpOnly(true);
+cm.setSecure(true);
 
 // Set
 cm.setCookie("my-cookie", "cookie-value");
+// cm.set("my-cookie","1234",30,"/","/admin"); // All options set
 // cm.set("my-cookie", "cookie-value"); // alias
 
 // Get
@@ -50,41 +49,27 @@ cm.deleteCookie("my-cookie");
 cm.logCookies();
 ```
 
-### Usage example 2 (TS)
-```
-const cm:CookieManager = new CookieManager()
-cm.set("my-cookie", "cookie-value", 3600, "/");
-```
 
 
-### Usage example 3 (JS)
+### Usage example 2 (JS)
 ```
 const cm = new CookieManager()
-cm.set("my-cookie", "cookie-value", 3600, "/");
-cm.get("my-cookie", "cookie-value", 3600, "/");
-cm.del("my-cookie");
-```
-
-### Usage example 4 (JS)
-```
-const cm = new CookieManager()
-cm.domain = "/"; // this is set to / by default
-
-cm.setSecurity(
-    httpOnly:Boolean,
-    Secure:Boolean,
-    SameSiteStric:Boolean,
-)
-
-cm.setExpiryTime(600);
+cm = new CookieManager();
+// cm.setPath("/");
+// cm.setDomain("yourdomain.com");
+cm.setExpiryTime(600); // optional can be set on setCookie
+cm.setSameSiteStrict(true);
+cm.setHttpOnly(true);
+cm.setSecure(true);
 
 // Set
 cm.setCookie("my-cookie", "cookie-value");
+// cm.set("my-cookie","1234",30,"/","/admin"); // All options set
 // cm.set("my-cookie", "cookie-value"); // alias
 
 // Get
-const myCookie = cm.getCookie("my-cookie");
-// const myCookie = cm.get("my-cookie"); // alias
+const myCookie:String = cm.getCookie("my-cookie");
+// const myCookie:String = cm.get("my-cookie"); // alias
 
 // Delete
 cm.deleteCookie("my-cookie");

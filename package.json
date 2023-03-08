@@ -1,9 +1,13 @@
 {
   "name": "aftc-cookiemanager",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "module": "index.js",
+  "types": "./types/main.d.ts",
+  "scripts": {
+    "buildTypes": "npx -p typescript tsc"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
