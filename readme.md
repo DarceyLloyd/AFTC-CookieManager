@@ -20,6 +20,8 @@ CookieManager.setCookie(
 
 ### Usage example 1 (TS)
 ```
+import { CookieManager } from "aftc-cookiemanager/src/CookieManager";
+
 const cm:CookieManager = new CookieManager()
 cm = new CookieManager();
 // cm.setPath("/");
@@ -53,6 +55,8 @@ cm.logCookies();
 
 ### Usage example 2 (JS)
 ```
+import { CookieManager } from "aftc-cookiemanager/src/CookieManager";
+
 const cm = new CookieManager()
 cm = new CookieManager();
 // cm.setPath("/");

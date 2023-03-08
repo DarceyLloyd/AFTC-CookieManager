@@ -1,4 +1,4 @@
-import { CookieManager } from 'AFTC-CookieManager/src/CookieManager.js';
+import { CookieManager } from 'aftc-cookiemanager/src/CookieManager.js';
 
 
 export { 
