@@ -14,11 +14,11 @@ export declare class CookieManager {
     setSameSiteStrict(useSameSiteStrict: boolean): void;
     private buildSecurityString;
     setExpiryTime(expiryTimeInSeconds: number): void;
-    setCookie(name: string, value: string, expiryTimeInSeconds: number, path?: string | null, domain?: string | null): null | undefined;
+    setCookie(name: string, value: string, expiryTimeInSeconds: number, path?: string | null, domain?: string | null): void;
     set(name: string, value: string, expiryTimeInSeconds: number, path?: string | null, domain?: string | null): void;
     getCookie(name: string): string | undefined;
     get(name: string): string | undefined;
-    deleteCookie(name: string): undefined;
+    deleteCookie(name: string): void;
     del(name: string): void;
     rem(name: string): void;
     remove(name: string): void;

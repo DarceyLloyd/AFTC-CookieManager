@@ -81,11 +81,11 @@ export class CookieManager {
         expiryTimeInSeconds: number,
         path: string | null = null,
         domain: string | null = null
-    ) {
+    ): void {
 
         if (name === "" || name.length === 0) {
             console.error("CookieManager.getCookie(name): Usage error - come on, I need the name of the cookie to set!");
-            return null;
+            return;
         }
 
         // Local vars for override
@@ -136,10 +136,10 @@ export class CookieManager {
     }
     // - - - - - - - - - - - - - - - - - - - - - - - -
 
-    deleteCookie(name: string) {
+    deleteCookie(name: string): void {
         if (name === "" || name.length === 0) {
             console.error("CookieManager.deleteCookie(name): Usage error - come on, I need the name of the cookie to delete!");
-            return undefined;
+            return;
         }
         const cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=${this.path};domain=${this.domain};${this.securityStr}`;
         // document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
