@@ -1,3 +1,3 @@
-declare module "aftc-cookiemanager/src/CookieManager" {
+declare module "cookiemanager/src/CookieManager" {
     export function CookieManager(): void;
 }
