@@ -1,10 +1,12 @@
 {
   "name": "aftc-cookiemanager",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "CookieManager",
   "types": "types/main.d.ts",
-  "main": "./src/CookieManager.js",
-  "module": "./src/CookieManager.js",
+  "main": "index.js",
+  "module": "index.js",
+  "filename": "./src/CookieManager.js",
+  "sideEffects": false,
   "scripts": {
     "buildTypes": "npx -p typescript tsc"
   },
